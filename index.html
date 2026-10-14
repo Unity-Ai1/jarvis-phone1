@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06111f">
+<meta name="description" content="JARVIS personal assistant prototype">
+<link rel="manifest" href="manifest.json">
+<title>J.A.R.V.I.S.</title>
+<style>
+:root{--cyan:#61eaff;--blue:#168cff;--bg:#030a12;--muted:#8baabd;--line:rgba(97,234,255,.28)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 30%,#10304b,#06111e 52%,#02060b);color:#eafaff;font:16px Arial,sans-serif;min-height:100dvh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(97,234,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(97,234,255,.08) 1px,transparent 1px);background-size:28px 28px;opacity:.4}
+header{position:relative;display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);background:#020912cc}
+.logo{font-weight:bold;letter-spacing:.2em;color:var(--cyan);font-size:18px}.sub{font-size:8px;letter-spacing:.14em;color:var(--muted);margin-top:5px}.live{font-size:9px;letter-spacing:.1em;color:#75ffca;white-space:nowrap}
+main{position:relative;max-width:720px;margin:auto;padding:20px 14px 26px}
+.center{text-align:center;border:1px solid var(--line);background:#071827b8;padding:20px 12px 18px;box-shadow:0 0 30px #168cff12}
+.orb{width:min(58vw,245px);aspect-ratio:1;margin:0 auto 15px;position:relative;display:grid;place-items:center;border:1px solid #61eaff88;border-radius:50%;animation:rotate 24s linear infinite}
+.orb:before,.orb:after{content:"";position:absolute;border:1px dashed #168cff;border-radius:50%;inset:12px}.orb:after{inset:28px;border-style:solid;border-color:#61eaff44;animation:rotate 12s linear infinite reverse}
+.core{width:78px;height:78px;border-radius:50%;background:radial-gradient(circle,#dffcff,#61eaff 12%,#168cff 45%,#061a32 76%);box-shadow:0 0 24px #168cff,0 0 60px #168cff88;animation:pulse 3s ease-in-out infinite}
+.orb.listening .core{background:radial-gradient(circle,#fff,#75ffca 18%,#06a98a 50%,#061a32 80%);box-shadow:0 0 30px #75ffca,0 0 65px #75ffca88}
+@keyframes rotate{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.09);opacity:.8}}
+h1{font-size:12px;letter-spacing:.3em;color:var(--cyan);font-weight:normal;margin:10px 0}.status{font-size:10px;letter-spacing:.12em;color:#75ffca;margin:9px 0 0}
+.hint{font-size:12px;color:var(--muted);line-height:1.55;margin:15px auto 0;max-width:420px}
+.chatbox{margin-top:14px;border:1px solid var(--line);background:#061421e8}
+.head{padding:13px 14px;color:var(--cyan);font-size:10px;letter-spacing:.18em;border-bottom:1px solid #61eaff22}
+.messages{padding:14px;min-height:95px;max-height:220px;overflow:auto;font-size:13px;line-height:1.5}
+.msg{margin:0 0 13px}.who{display:block;color:var(--cyan);font-size:9px;letter-spacing:.13em;margin-bottom:4px}.user .who{color:#b9c8ff}
+form{display:flex;gap:7px;padding:10px;border-top:1px solid #61eaff22}
+input{min-width:0;flex:1;background:#020a12;color:white;border:1px solid var(--line);padding:13px 10px;border-radius:2px;font-size:14px}
+button{border:1px solid #61eaff77;background:#0a2a40;color:var(--cyan);padding:12px 13px;font-size:11px;letter-spacing:.08em}
+button:active{background:#125078}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.controls button{min-height:47px}
+.note{color:#7897a9;font-size:10px;line-height:1.5;text-align:center;margin:16px 8px}
+footer{text-align:center;color:#567589;font-size:9px;letter-spacing:.1em;padding:12px}
+@media(min-width:600px){main{padding-top:30px}.center{padding:28px}.messages{max-height:260px}}
+</style>
+</head>
+<body>
+<header><div><div class="logo">J.A.R.V.I.S.</div><div class="sub">PERSONAL ASSISTANT PROTOTYPE</div></div><div class="live">● INTERFACE ONLINE</div></header>
+<main>
+<section class="center">
+<div class="orb" id="orb"><div class="core"></div></div>
+<h1>JARVIS SYSTEM CORE</h1>
+<div class="status" id="status">AWAITING YOUR COMMAND</div>
+<p class="hint">Tap the microphone to speak, or type a command below. This first mobile build uses demo replies; a real AI brain is the next upgrade.</p>
+</section>
+<section class="chatbox"><div class="head">VOICE & COMMAND CONSOLE</div>
+<div class="messages" id="messages"><div class="msg"><span class="who">J.A.R.V.I.S.</span>Good day, sir. I'm ready. Tap “TALK TO JARVIS” to try voice input, or type “What time is it?”</div></div>
+<form id="form"><input id="input" placeholder="Speak or type a command…" autocomplete="off"><button type="submit">SEND</button></form>
+<div class="controls"><button id="talk">🎙 TALK TO JARVIS</button><button id="speak">🔊 TEST VOICE</button><button id="install" hidden>📲 INSTALL JARVIS</button><button id="help">⌘ COMMAND HELP</button></div>
+</section>
+<p class="note">Prototype only: this page does not yet connect to a full AI model or listen continuously for “Hey JARVIS.” Voice features depend on browser support and microphone permissions.</p>
+</main><footer>PROJECT JARVIS · BUILD 0.2 · INSPIRED BY SCIENCE FICTION</footer>
+<script>
+const $=id=>document.getElementById(id);
+function add(who,text,user=false){let d=document.createElement('div');d.className='msg'+(user?' user':'');let b=document.createElement('span');b.className='who';b.textContent=who;let s=document.createElement('span');s.textContent=text;d.append(b,s);$('messages').append(d);$('messages').scrollTop=$('messages').scrollHeight}
+function say(text){if(!('speechSynthesis'in window)){add('J.A.R.V.I.S.','This browser does not support spoken responses.');return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.rate=.94;u.pitch=.82;speechSynthesis.speak(u)}
+function reply(raw){let q=raw.toLowerCase(),a;
+if(q.includes('time'))a='The time is '+new Date().toLocaleTimeString()+', sir.';
+else if(q.includes('date')||q.includes('day'))a='Today is '+new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'.';
+else if(q.includes('who are you')||q.includes('your name'))a='I am JARVIS, your personal assistant prototype. My full AI brain is not connected yet.';
+else if(q.includes('status')||q.includes('system'))a='The interface is online and the command console is ready. AI connection is still pending.';
+else if(q.includes('hello')||q.includes('hi'))a='Good day, sir. I am online and ready for your instructions.';
+else if(q.includes('help')||q.includes('commands'))a='Try asking for the time, date, system status, or my identity. Open-ended AI answers will be available after we connect an AI service.';
+else a='Command received, sir. I do not have my full AI brain connected yet, so I cannot answer that one intelligently. That is our next upgrade.';
+add('J.A.R.V.I.S.',a);$('status').textContent='COMMAND PROCESSED';}
+$('form').addEventListener('submit',e=>{e.preventDefault();let v=$('input').value.trim();if(!v)return;add('YOU',v,true);$('input').value='';reply(v)});
+$('speak').addEventListener('click',()=>say('Voice test initiated, sir. JARVIS is online.'));
+$('help').addEventListener('click',()=>{add('YOU','Help',true);reply('help')});
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+$('talk').addEventListener('click',()=>{if(!SR){add('J.A.R.V.I.S.','Voice input is not supported in this browser. Try a current version of Chrome.');return}
+try{let r=new SR();r.lang='en-US';r.interimResults=false;r.onstart=()=>{$('orb').classList.add('listening');$('status').textContent='LISTENING…'};r.onend=()=>{$('orb').classList.remove('listening');$('status').textContent='AWAITING YOUR COMMAND'};r.onerror=()=>add('J.A.R.V.I.S.','I could not access the microphone. Check browser permissions and try again.');r.onresult=e=>{let v=e.results[0][0].transcript;add('YOU',v,true);reply(v);let last=$('messages').lastElementChild.querySelector('span:last-child').textContent;say(last)};r.start()}catch(e){add('J.A.R.V.I.S.','Voice input could not start. Please try again.')}});
+let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('install').hidden=false});$('install').addEventListener('click',async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else add('J.A.R.V.I.S.','If installation is unavailable, use your browser menu and choose “Add to Home screen” when this app is hosted securely.')});
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
